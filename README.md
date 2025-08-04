@@ -1,11 +1,11 @@
 # hospital_Portal_repo
 
 This is a mini project made based on requirements below
- 1.Types of Users:
+1.Types of Users:
 a. Patient
 b. Doctor
 
- 2. The signup form should have following fields:
+2. The signup form should have following fields:
 a. First Name
 b. Last Name
 c. Profile Picture

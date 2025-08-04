@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Doctor Dashboard</title>
+	<!-- Include Tailwind CSS from CDN -->
+	<script src="https://cdn.tailwindcss.com"></script>
+	<style>
+		/* Using the Inter font for a clean, professional look */
+		@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap');
+		body {
+			font-family: 'Inter', sans-serif;
+		}
+	</style>
+</head>
+<body class="bg-gray-100 min-h-screen flex items-center justify-center p-4">
+	<!-- Main dashboard container card -->
+	<div class="bg-white p-8 rounded-xl shadow-2xl max-w-2xl w-full">
+		<!-- Main header with a welcome message -->
+		<h2 class="text-3xl font-bold text-center text-gray-800 mb-6">Welcome Dr. {{ first_name }} {{ last_name }}</h2>
+		
+		<!-- Profile picture section with conditional display -->
+		{% if profile_pic %}
+			<div class="flex justify-center mb-8">
+				<img src="{{ profile_pic.url }}" alt="Profile Picture" class="w-32 h-32 object-cover rounded-full border-4 border-indigo-200 shadow-lg">
+			</div>
+		{% endif %}
+
+		<!-- Doctor details section -->
+		<div class="bg-gray-50 p-6 rounded-lg shadow-inner">
+			<table class="w-full text-left table-auto">
+				<tbody>
+					<!-- Table rows with hover effect for visual feedback -->
+					<tr class="border-b border-gray-200">
+						<td class="py-3 px-2 font-semibold text-gray-600">Username:</td>
+						<td class="py-3 px-2 text-gray-800">{{ username }}</td>
+					</tr>
+					<tr class="border-b border-gray-200">
+						<td class="py-3 px-2 font-semibold text-gray-600">Email:</td>
+						<td class="py-3 px-2 text-gray-800">{{ email }}</td>
+					</tr>
+					<tr class="border-b border-gray-200">
+						<td class="py-3 px-2 font-semibold text-gray-600">Address:</td>
+						<td class="py-3 px-2 text-gray-800">{{ address_line1 }}</td>
+					</tr>
+					<tr class="border-b border-gray-200">
+						<td class="py-3 px-2 font-semibold text-gray-600">City:</td>
+						<td class="py-3 px-2 text-gray-800">{{ city }}</td>
+					</tr>
+					<tr class="border-b border-gray-200">
+						<td class="py-3 px-2 font-semibold text-gray-600">State:</td>
+						<td class="py-3 px-2 text-gray-800">{{ state }}</td>
+					</tr>
+					<tr class="border-b border-gray-200">
+						<td class="py-3 px-2 font-semibold text-gray-600">Pincode:</td>
+						<td class="py-3 px-2 text-gray-800">{{ pincode }}</td>
+					</tr>
+					<tr class="border-b border-gray-200">
+						<td class="py-3 px-2 font-semibold text-gray-600">Medical License No.:</td>
+						<td class="py-3 px-2 text-gray-800">{{ medical_license_number }}</td>
+					</tr>
+					<tr class="border-b border-gray-200">
+						<td class="py-3 px-2 font-semibold text-gray-600">College Name:</td>
+						<td class="py-3 px-2 text-gray-800">{{ college_name }}</td>
+					</tr>
+					<tr class="border-b border-gray-200">
+						<td class="py-3 px-2 font-semibold text-gray-600">Degree:</td>
+						<td class="py-3 px-2 text-gray-800">{{ degree }}</td>
+					</tr>
+					<tr class="border-b border-gray-200">
+						<td class="py-3 px-2 font-semibold text-gray-600">Primary Contact:</td>
+						<td class="py-3 px-2 text-gray-800">{{ phone_number1 }}</td>
+					</tr>
+					<tr class="border-b border-gray-200">
+						<td class="py-3 px-2 font-semibold text-gray-600">Alternate Contact:</td>
+						<td class="py-3 px-2 text-gray-800">{{ phone_number2 }}</td>
+					</tr>
+					<!-- Verification status row with conditional styling -->
+					<tr class="border-b border-gray-200">
+						<td class="py-3 px-2 font-semibold text-gray-600">Verification Status:</td>
+						<td class="py-3 px-2 text-gray-800">
+							<span class="inline-block px-3 py-1 rounded-full text-xs font-bold {% if verified %}bg-green-100 text-green-600{% else %}bg-red-100 text-red-600{% endif %}">
+								{{ verified|yesno:"Verified,Not Verified" }}
+							</span>
+						</td>
+					</tr>
+					<!-- Conditional links for photo verification -->
+					{% if degree_photo %}
+					<tr class="border-b border-gray-200">
+						<td class="py-3 px-2 font-semibold text-gray-600">Degree Photo:</td>
+						<td class="py-3 px-2">
+							<a href="{{ degree_photo.url }}" target="_blank" class="text-indigo-600 hover:text-indigo-800 hover:underline font-medium">View</a>
+						</td>
+					</tr>
+					{% endif %}
+					{% if govt_id_photo %}
+					<tr class="border-b border-gray-200">
+						<td class="py-3 px-2 font-semibold text-gray-600">Govt ID:</td>
+						<td class="py-3 px-2">
+							<a href="{{ govt_id_photo.url }}" target="_blank" class="text-indigo-600 hover:text-indigo-800 hover:underline font-medium">View</a>
+						</td>
+					</tr>
+					{% endif %}
+				</tbody>
+			</table>
+		</div>
+
+		<!-- Under construction placeholder image -->
+		<div class="mt-8 text-center">
+			<img src="https://placehold.co/600x180/e2e8f0/475569?text=Additional+details+coming+soon" alt="Coming Soon" class="mx-auto rounded-lg shadow-md max-w-full h-auto">
+		</div>
+
+		<!-- Logout button -->
+		<div class="mt-8 text-center">
+			<a href="{% url 'logout' %}" class="inline-block bg-indigo-600 text-white font-semibold py-3 px-6 rounded-full shadow-lg hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 transition-colors duration-300">
+				Logout
+			</a>
+		</div>
+	</div>
+</body>
+</html>

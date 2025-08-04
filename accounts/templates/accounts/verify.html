@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Verification Page</title>
+    <!-- Include Tailwind CSS from CDN for modern styling -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        /* Using the Inter font for a clean, professional look */
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap');
+        body {
+            font-family: 'Inter', sans-serif;
+        }
+    </style>
+</head>
+<body class="bg-gradient-to-br from-blue-100 to-teal-100 min-h-screen flex items-center justify-center p-4">
+{% block content %}
+    <!-- Main container card -->
+    <div class="bg-white p-8 rounded-xl shadow-2xl max-w-lg w-full">
+        <!-- Page title and welcome message -->
+        <h2 class="text-3xl font-bold text-center text-teal-800 mb-4">Doctor Credential Verification</h2>
+        <p class="text-center text-gray-600 mb-8">
+            Welcome Dr. {{ user.first_name }} {{ user.last_name }}, please complete your credential verification below:
+        </p>
+
+        <!-- Verification form -->
+        <form method="post" enctype="multipart/form-data" class="space-y-6">
+            {% csrf_token %}
+            
+            <!-- This section renders the form fields. The styles are applied by Tailwind. -->
+            {% for field in form %}
+                <div class="flex flex-col">
+                    <label for="{{ field.id_for_label }}" class="mb-2 font-semibold text-gray-700">
+                        {{ field.label }}
+                    </label>
+                    <!-- The input/file field itself -->
+                    {{ field }}
+                    <!-- Display any field-specific errors -->
+                    {% for error in field.errors %}
+                        <p class="text-sm text-red-500 mt-1">{{ error }}</p>
+                    {% endfor %}
+                    <!-- Help text for the field -->
+                    {% if field.help_text %}
+                        <p class="text-xs text-gray-500 mt-1">{{ field.help_text }}</p>
+                    {% endif %}
+                </div>
+            {% endfor %}
+            
+            <!-- Submit button with a vibrant, consistent color -->
+            <button type="submit" class="w-full bg-teal-500 text-white font-bold py-3 px-4 rounded-lg shadow-md hover:bg-teal-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-teal-500 transition-colors duration-300">
+                Submit Verification
+            </button>
+        </form>
+    </div>
+{% endblock %}
+</body>
+</html>
